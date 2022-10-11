@@ -10,6 +10,8 @@ import Todo from "./screens/Todo";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 const Stack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
@@ -99,9 +101,11 @@ function MyStack() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <MyStack />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <MyStack />
+      </NavigationContainer>
+    </Provider>
   );
 }
 

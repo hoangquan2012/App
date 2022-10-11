@@ -28,7 +28,7 @@ const Task = (props: any) => (
           color="red"
           style={{ position: "absolute", right: 10, bottom: 15 }}
           onPress={() => {
-            console.log("click delete");
+            // console.log("click delete");
             props.delete(props.id);
           }}
         />
