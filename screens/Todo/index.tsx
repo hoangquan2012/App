@@ -20,23 +20,7 @@ const Todo = ({ navigation }: any) => {
   };
   const dispatch = useDispatch();
   const todoList = useSelector(todoListSelector);
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      text: "Join friend birthday Party",
-      checked: false,
-    },
-    {
-      id: 2,
-      text: "Doing house work",
-      checked: false,
-    },
-    {
-      id: 3,
-      text: "Make study plan",
-      checked: false,
-    },
-  ]);
+
 
   const handleDelete = (id: any) => {
     // setTodos((values) => {
@@ -70,7 +54,7 @@ const Todo = ({ navigation }: any) => {
             if (value.length > 0) {
               dispatch(
                 addTodo({
-                  id: todos.length + 1,
+                  id: todoList.length + 1,
                   text: value,
                   checked: false,
                 })
