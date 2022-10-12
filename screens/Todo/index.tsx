@@ -21,7 +21,6 @@ const Todo = ({ navigation }: any) => {
   const dispatch = useDispatch();
   const todoList = useSelector(todoListSelector);
 
-
   const handleDelete = (id: any) => {
     // setTodos((values) => {
     //   return values.filter((todo) => {
@@ -29,52 +28,52 @@ const Todo = ({ navigation }: any) => {
     //   });
     // });
     console.log("click delete", id);
-    dispatch(
-      deleteTodo(id)
-    );
+    dispatch(deleteTodo(id));
   };
 
   const [titleText, setTitleText] = useState("");
   return (
-    <ImageBackground source={image}>
-      <View style={{ height: "100%" }}>
-        <Text>{titleText}</Text>
-        {todoList.map((task: any, index: any) => (
-          <Task
-            key={index}
-            text={task.text}
-            id={task.id}
-            checked={task.checked}
-            delete={(value: any) => handleDelete(value)}
-          />
-        ))}
-        <ButtonAdd
-          onAdd={(value: string) => {
-            console.log(value);
-            if (value.length > 0) {
-              dispatch(
-                addTodo({
-                  id: todoList.length + 1,
-                  text: value,
-                  checked: false,
-                })
-              );
-            }
+    <SafeAreaView>
+      <ImageBackground source={image}>
+        <View style={{ height: "100%" }}>
+          <Text>{titleText}</Text>
+          {todoList.map((task: any, index: any) => (
+            <Task
+              key={index}
+              text={task.text}
+              id={task.id}
+              checked={task.checked}
+              delete={(value: any) => handleDelete(value)}
+            />
+          ))}
+          <ButtonAdd
+            onAdd={(value: string) => {
+              console.log(value);
+              if (value.length > 0) {
+                dispatch(
+                  addTodo({
+                    id: todoList.length + 1,
+                    text: value,
+                    checked: false,
+                  })
+                );
+              }
 
-            // if (value.length > 0) {
-            //   setTodos([
-            //     ...todos,
-            //     {
-            //       id: todos.length + 1,
-            //       text: value,
-            //       checked: false,
-            //     },
-            //   ]);
-            // }
-          }}
-        />
-      </View>
-    </ImageBackground>
+              // if (value.length > 0) {
+              //   setTodos([
+              //     ...todos,
+              //     {
+              //       id: todos.length + 1,
+              //       text: value,
+              //       checked: false,
+              //     },
+              //   ]);
+              // }
+            }}
+          />
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

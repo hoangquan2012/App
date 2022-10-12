@@ -12,6 +12,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import Image from "./screens/Image";
 const Stack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
@@ -32,26 +33,14 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Tomorrow"
-        component={Todo}
+        name="Image"
+        component={Image}
         options={{
+          headerStyle: {
+            backgroundColor: "#b4ec75",
+          },
           tabBarIcon: () => {
             return <Ionicons name="today" size={24} color="black" />;
-          },
-        }}
-      />
-      <Tab.Screen
-        name="This week"
-        component={Todo}
-        options={{
-          tabBarIcon: () => {
-            return (
-              <MaterialCommunityIcons
-                name="calendar-week"
-                size={24}
-                color="black"
-              />
-            );
           },
         }}
       />
@@ -95,6 +84,7 @@ function MyStack() {
       <Stack.Screen name="Admin" component={Admin} />
       <Stack.Screen name="MyDrawer" component={MyDrawer} />
       <Stack.Screen name="MyTabs" component={MyTabs} />
+      <Stack.Screen name="Image" component={Image} />
     </Stack.Navigator>
   );
 }
