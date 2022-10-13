@@ -35,6 +35,8 @@ const ButtonAdd = (props: { onAdd: (value: string) => unknown }) => {
                 style={styles.textInput}
                 onChangeText={(value) => setValue(value)}
                 value={value}
+                clearButtonMode='while-editing'
+                keyboardAppearance='dark'
                 placeholder={"Write some thing !"}
               />
             </View>

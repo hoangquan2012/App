@@ -22,11 +22,6 @@ const Todo = ({ navigation }: any) => {
   const todoList = useSelector(todoListSelector);
 
   const handleDelete = (id: any) => {
-    // setTodos((values) => {
-    //   return values.filter((todo) => {
-    //     if (todo.id !== id) return true;
-    //   });
-    // });
     console.log("click delete", id);
     dispatch(deleteTodo(id));
   };
@@ -35,7 +30,7 @@ const Todo = ({ navigation }: any) => {
   return (
     <SafeAreaView>
       <ImageBackground source={image}>
-        <View style={{ height: "100%" }}>
+        <View style={{ height: "100%", paddingLeft: 10, paddingRight: 10 }}>
           <Text>{titleText}</Text>
           {todoList.map((task: any, index: any) => (
             <Task
@@ -58,17 +53,6 @@ const Todo = ({ navigation }: any) => {
                   })
                 );
               }
-
-              // if (value.length > 0) {
-              //   setTodos([
-              //     ...todos,
-              //     {
-              //       id: todos.length + 1,
-              //       text: value,
-              //       checked: false,
-              //     },
-              //   ]);
-              // }
             }}
           />
         </View>

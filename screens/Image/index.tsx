@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  ImageBackground,
-  View,
-  Button,
-  Text,
-  Alert,
-  Image
-} from "react-native";
+import { SafeAreaView, ImageBackground, View, Image } from "react-native";
 import ButtonCamera from "../../components/Button/ButtonCamera";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,12 +12,23 @@ const ImageComponent = ({ navigation }: any) => {
 
   const renderImages = (images: any[] = []) => {
     return images.map((img: any) => {
-        return <Image source={{uri: img.uri, width: 200, height: 200}}  />
-      })
-  }
+      return <Image source={{ uri: img.uri, width: 100, height: 100 }} />;
+    });
+  };
   return (
     <ImageBackground source={image}>
-      <SafeAreaView>
+      <SafeAreaView style={{position: 'relative'}}>
+        <View
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          {renderImages(imgs)}
+        </View>
         <View
           style={{
             height: "100%",
@@ -36,15 +37,14 @@ const ImageComponent = ({ navigation }: any) => {
             justifyContent: "center",
           }}
         >
-            {renderImages(imgs)}
           <ButtonCamera
             onSave={(value: any) =>
               setImgs((values: any) => {
                 let newValues = values ? [...values] : [];
                 newValues.push(value);
-                console.log(newValues.length)
-                return newValues
-            })
+                console.log(newValues.length);
+                return newValues;
+              })
             }
           />
         </View>

@@ -1,49 +1,84 @@
-import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Modal,
+  Alert,
+  Pressable,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-const Task = (props: any) => (
-  <View style={styles.taskWrapper}>
-    <View>
-      <TouchableOpacity>
-        <AntDesign
-          name="checkcircleo"
-          size={24}
-          color={props.checked ? "green" : "black"}
-          style={{ position: "absolute", top: 15, left: 15 }}
-        />
-      </TouchableOpacity>
-    </View>
 
-    <View style={{ alignItems: "center", width: "100%" }}>
-      {props.checked && <View style={styles.verticalLine}></View>}
-      <View style={styles.color}></View>
-      <View>
-        <Text style={styles.task}>{props.text}</Text>
+const Task = (props: any) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  return (
+    <View style={styles.taskWrapper}>
+      <Modal
+        animationType="fade"
+        presentationStyle='formSheet'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{props.text}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Close</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
+      <View style={{ alignItems: "center", width: "100%" }}>
+        <View style={{ padding: 20, paddingBottom: 30 }}>
+          <Text style={styles.task} numberOfLines={1} ellipsizeMode={"tail"}>
+            {props.text}
+          </Text>
+        </View>
+        <View style={{ position: "absolute", bottom: 10, left: 20 }}>
+          <Text style={{ textTransform: "uppercase", color: "#B5BCCC" }}>
+            Created at : Now{" "}
+          </Text>
+        </View>
+
+        <TouchableOpacity style={{ width: "100%" }}>
+          <AntDesign
+            name="edit"
+            size={24}
+            color="black"
+            style={{ position: "absolute", right: 70, bottom: 15 }}
+          />
+          <AntDesign
+            name="eye"
+            size={24}
+            color="#adcae6"
+            style={{ position: "absolute", right: 40, bottom: 15 }}
+            onPress={() => setModalVisible(true)}
+          />
+          <Entypo
+            name="trash"
+            size={24}
+            color="red"
+            style={{ position: "absolute", right: 10, bottom: 15 }}
+            onPress={() => {
+              // console.log("click delete");
+              props.delete(props.id);
+            }}
+          />
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={{ width: "100%" }}>
-        <Entypo
-          name="trash"
-          size={24}
-          color="red"
-          style={{ position: "absolute", right: 10, bottom: 15 }}
-          onPress={() => {
-            // console.log("click delete");
-            props.delete(props.id);
-          }}
-        />
-      </TouchableOpacity>
     </View>
-
-    {/* <Icon
-      name="trash-2"
-      size={30}
-      color="#900"
-      style={{ marginLeft: "auto" }}
-      onPress={props.delete}
-    /> */}
-  </View>
-);
+  );
+};
 
 export default Task;
 const styles = StyleSheet.create({
@@ -85,5 +120,46 @@ const styles = StyleSheet.create({
     width: "100%",
     position: "absolute",
     marginTop: 15,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#DC143C",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });

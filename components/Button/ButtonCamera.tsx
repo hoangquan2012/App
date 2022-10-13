@@ -13,6 +13,7 @@ const ButtonCamera = (props: any) => {
     if (status === "granted") {
       // start the camera
       setStartCamera(true);
+      setPreviewVisible(false);
     } else {
       Alert.alert("We need your permission to show the camera");
     }
