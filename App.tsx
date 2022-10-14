@@ -12,6 +12,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+
 import Image from "./screens/Image";
 const Stack = createNativeStackNavigator();
 

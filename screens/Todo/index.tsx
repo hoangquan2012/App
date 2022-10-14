@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,26 +12,50 @@ import {
 import Task from "../../components/Task/TaskToday";
 import ButtonAdd from "../../components/Button/ButtonAdd";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, deleteTodo } from "../../redux/action";
-import { todoListSelector } from "../../redux/selectors";
+import { addTodo, deleteTodo, searchTodo } from "../../redux/action";
+import { todoListSelector , searchTextSelector } from "../../redux/selectors";
+
 const Todo = ({ navigation }: any) => {
   const image = {
     uri: "https://mondaycareer.com/wp-content/uploads/2020/11/Background-th%C3%A0nh-ph%E1%BB%91-%C4%91%E1%BA%B9p-hi%E1%BB%87n-%C4%91%E1%BA%A1i-minh-ho%E1%BA%A1.jpg",
   };
   const dispatch = useDispatch();
   const todoList = useSelector(todoListSelector);
+  const searchSelector = useSelector(searchTextSelector)
+  const [searchText, setSeatchText] = useState("");
 
   const handleDelete = (id: any) => {
     console.log("click delete", id);
     dispatch(deleteTodo(id));
   };
 
-  const [titleText, setTitleText] = useState("");
+  const handSearch = (value: any) => {
+    setSeatchText(value);
+    
+  };
+
+  useEffect(() => {
+    dispatch(searchTodo(searchText));
+    console.log(searchText)
+  },[searchText])
+
   return (
     <SafeAreaView>
       <ImageBackground source={image}>
         <View style={{ height: "100%", paddingLeft: 10, paddingRight: 10 }}>
-          <Text>{titleText}</Text>
+          <TextInput
+            style={{
+              height: 40,
+              margin: 12,
+              borderWidth: 1,
+              padding: 10,
+              borderRadius: 10,
+            }}
+            inlineImageLeft="user"
+            placeholder="Search Project"
+            onChangeText={handSearch}
+            value={searchText}
+          />
           {todoList.map((task: any, index: any) => (
             <Task
               key={index}

@@ -11,3 +11,17 @@ export const deleteTodo = (data : any) => {
         payload: data,
     }
 }
+
+export const editTodo = (data : any) => {
+    return {
+        type: 'todoList/editTodo',
+        payload: data,
+    }
+}
+
+export const searchTodo = (text : any) => {
+    return {
+        type: 'filter/searchFilter',
+        payload: text,
+    }
+}

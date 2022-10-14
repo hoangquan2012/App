@@ -7,19 +7,25 @@ import {
   Modal,
   Alert,
   Pressable,
+  TextInput,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import { todoListSelector } from "../../redux/selectors";
 
 const Task = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleEdit, setModalVisibleEdit] = useState(false);
+  const [text, setText] = useState("NOT FIX YET ");
+  const todoList = useSelector(todoListSelector);
   return (
     <View style={styles.taskWrapper}>
       <Modal
         animationType="fade"
-        presentationStyle='formSheet'
-        transparent={true}
+        presentationStyle="formSheet"
         visible={modalVisible}
+        transparent={true}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
@@ -33,6 +39,56 @@ const Task = (props: any) => {
               onPress={() => setModalVisible(!modalVisible)}
             >
               <Text style={styles.textStyle}>Close</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisibleEdit}
+        onRequestClose={() => {
+          setModalVisibleEdit(!modalVisibleEdit);
+        }}
+        style={{ width: "100%" }}
+      >
+        <View style={styles.centeredView}>
+          <View
+            style={{
+              width: "100%",
+              margin: 20,
+              backgroundColor: "white",
+              borderRadius: 20,
+              padding: 35,
+              alignItems: "center",
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 4,
+              elevation: 5,
+            }}
+          >
+            <Text style={styles.modalText}>Edit your plan</Text>
+            <View style={{ width: "100%", height: 50, marginBottom: 30 }}>
+              <TextInput
+                style={styles.textInput}
+                clearButtonMode="while-editing"
+                keyboardAppearance="dark"
+                value={text}
+                editable={false}
+                textAlign="center"
+              />
+            </View>
+            <Pressable
+              style={[styles.button1, styles.buttonClose]}
+              onPress={() => {
+                setModalVisibleEdit(!modalVisibleEdit);
+              }}
+            >
+              <Text style={styles.textStyle}>Edit project</Text>
             </Pressable>
           </View>
         </View>
@@ -56,6 +112,7 @@ const Task = (props: any) => {
             size={24}
             color="black"
             style={{ position: "absolute", right: 70, bottom: 15 }}
+            onPress={() => setModalVisibleEdit(true)}
           />
           <AntDesign
             name="eye"
@@ -161,5 +218,20 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+  },
+  button1: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textInput: {
+    width: "100%",
+    flex: 1,
+    fontSize: 16,
+    fontWeight: "bold",
+    borderWidth: 2,
+    borderRadius: 90,
+    color: "red",
+    padding: 10,
   },
 });
