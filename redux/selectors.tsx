@@ -1,10 +1,14 @@
-export const todoListSelector = (state :any) => {
-    const searchText = searchTextSelector(state)
+import { createSelector } from "reselect";
 
-    const todoRemaining = state.todoList.filter((todo : any) => {
-        return todo.text.includes(state.filter.search)
-    })
-    return todoRemaining
-}
+export const searchTextSelector = (state: any) => state.filter.search;
+export const todoListSelector = (state: any) => state.todoList;
 
-export const searchTextSelector = (state: any) => state.filter.search
+export const todoRemainingSelector = createSelector(
+  todoListSelector,
+  searchTextSelector,
+  (todoList, searchText) => {
+    return todoList.filter((todo: any) => {
+      return todo.text.includes(searchText);
+    });
+  }
+);

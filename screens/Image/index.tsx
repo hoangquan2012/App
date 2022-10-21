@@ -17,17 +17,19 @@ const ImageComponent = ({ navigation }: any) => {
   };
   return (
     <ImageBackground source={image}>
-      <SafeAreaView style={{position: 'relative'}}>
-        <View
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            display: "flex",
-            flexDirection: "row",
-          }}
-        >
-          {renderImages(imgs)}
+      <SafeAreaView style={{ position: "relative" }}>
+        <View>
+          <View
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            {renderImages(imgs)}
+          </View>
         </View>
         <View
           style={{

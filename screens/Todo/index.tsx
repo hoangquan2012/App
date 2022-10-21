@@ -12,32 +12,31 @@ import {
 import Task from "../../components/Task/TaskToday";
 import ButtonAdd from "../../components/Button/ButtonAdd";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, deleteTodo, searchTodo } from "../../redux/action";
-import { todoListSelector , searchTextSelector } from "../../redux/selectors";
-
+import { todoRemainingSelector } from "../../redux/selectors";
+import TodoSlice from "../../redux/slice/TodoSlice";
+import FilterSlice from "../../redux/slice/FilterSlice";
 const Todo = ({ navigation }: any) => {
   const image = {
     uri: "https://mondaycareer.com/wp-content/uploads/2020/11/Background-th%C3%A0nh-ph%E1%BB%91-%C4%91%E1%BA%B9p-hi%E1%BB%87n-%C4%91%E1%BA%A1i-minh-ho%E1%BA%A1.jpg",
   };
   const dispatch = useDispatch();
-  const todoList = useSelector(todoListSelector);
-  const searchSelector = useSelector(searchTextSelector)
+  const todoList = useSelector(todoRemainingSelector);
+
   const [searchText, setSeatchText] = useState("");
 
   const handleDelete = (id: any) => {
     console.log("click delete", id);
-    dispatch(deleteTodo(id));
+    dispatch(TodoSlice.actions.deleteTodo(id));
   };
 
   const handSearch = (value: any) => {
     setSeatchText(value);
-    
   };
 
   useEffect(() => {
-    dispatch(searchTodo(searchText));
-    console.log(searchText)
-  },[searchText])
+    dispatch(FilterSlice.actions.searchFilter(searchText));
+    console.log(searchText);
+  }, [searchText]);
 
   return (
     <SafeAreaView>
@@ -70,7 +69,7 @@ const Todo = ({ navigation }: any) => {
               console.log(value);
               if (value.length > 0) {
                 dispatch(
-                  addTodo({
+                  TodoSlice.actions.addTodo({
                     id: todoList.length + 1,
                     text: value,
                     checked: false,
